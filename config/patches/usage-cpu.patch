@@ -1,0 +1,54 @@
+diff --git a/main.js b/main.js
+--- a/main.js
++++ b/main.js
+@@ -7,0 +8 @@
++  exec,
+@@ -18,0 +20 @@
++const CPU_EVERY = 5000; // CPU sample (`top` takes ~3 s itself, so a busy flag skips overlaps)
+@@ -26,0 +29 @@
++    this.startCpu(cx);
+@@ -43,0 +47,30 @@
++  // Machine CPU load (user + sys, in %) shown as one more item in the strip. Kept on the
++  // instance, not in shared state: it changes every few seconds and needs no disk write.
++  startCpu(cx) {
++    if (this.cpuOn) return;
++    this.cpuOn = true;
++    this.sampleCpu(cx);
++    cx.timer.every(CPU_EVERY, (cx) => this.sampleCpu(cx));
++  }
++
++  sampleCpu(cx) {
++    if (this.cpuBusy) return;
++    this.cpuBusy = true;
++    cx.spawn(async (cx) => {
++      try {
++        // The first `top` sample is since boot; the second covers the last second.
++        const r = await exec("sh", [
++          "-c",
++          "top -l 2 -n 0 -s 1 | grep 'CPU usage' | tail -1",
++        ]);
++        const idle = /([\d.]+)% idle/.exec(r.stdout)?.[1];
++        this.cpu = idle == null ? null : Math.round(100 - Number(idle));
++      } catch {
++        this.cpu = null;
++      } finally {
++        this.cpuBusy = false;
++        cx.notify();
++      }
++    });
++  }
++
+@@ -69,0 +103 @@
++    if (!this.detail) this.startCpu(cx); // a hot reload does not re-run init
+@@ -73,0 +108,9 @@
++    const cpu = h_flex()
++      .gap(5)
++      .items_center()
++      .child(div().text_color(t.dim).child("CPU"))
++      .child(
++        div()
++          .text_color(this.cpu == null ? t.dim : color(t, this.cpu))
++          .child(this.cpu == null ? "—" : `${this.cpu}%`),
++      );
+@@ -133,0 +177 @@
++      .child(cpu)

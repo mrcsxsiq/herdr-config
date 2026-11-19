@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "herdr": "0.1.11",
+  "mods": [
+    {
+      "name": "issues",
+      "repo": "jankeesvw/herdr-issues",
+      "commit": "15ffaad00d37efe17ef952109a3198fe299ecb67",
+      "kind": "symlink",
+      "sub": "mods/issues"
+    },
+    {
+      "name": "checklist",
+      "repo": "mrcsxsiq/herdr-checklist",
+      "commit": "57aede63a5c7de05695b2387c4212c495d2e0154",
+      "kind": "symlink",
+      "sub": "mods/checklist"
+    },
+    {
+      "name": "Git",
+      "repo": "kaishin/herdr-git-mod",
+      "commit": "dc7427ca9e6e2deb583098a3a0d1ccf7c0a10b1b",
+      "kind": "script",
+      "script": "scripts/install.py"
+    },
+    {
+      "name": "herdr-kanban",
+      "repo": "jellespijker/herdr-kanban",
+      "commit": "f65156d693f0c0d5818e07daffca4f33655af525",
+      "kind": "copy",
+      "sub": "mods/herdr-kanban",
+      "exclude": [
+        "preview.png"
+      ]
+    },
+    {
+      "name": "mission-control-jira",
+      "repo": "CiprianSpiridon/herdr-mission-control",
+      "commit": "594284673251bf085d2395b301868147de6e7ca3",
+      "kind": "copy",
+      "sub": "mission-control-jira/mods/mission-control-jira"
+    },
+    {
+      "name": "mission-control-gitlab",
+      "repo": "CiprianSpiridon/herdr-mission-control",
+      "commit": "594284673251bf085d2395b301868147de6e7ca3",
+      "kind": "copy",
+      "sub": "mission-control-gitlab/mods/mission-control-gitlab"
+    },
+    {
+      "name": "session-bar",
+      "repo": "cybertron288/herdr-mods",
+      "commit": "34e7c3348e954fd0a1147b846898db8c3e37e526",
+      "kind": "copy",
+      "sub": "session-bar/mods/session-bar"
+    },
+    {
+      "name": "usage",
+      "repo": "mbaljeetsingh/herdr-tasks",
+      "commit": "77659d2ab2fb5fa15124df8cba7a676f6c67096b",
+      "kind": "copy",
+      "sub": "mods/usage",
+      "patch": {
+        "file": "main.js",
+        "path": "config/patches/usage-cpu.patch"
+      }
+    }
+  ]
+}
